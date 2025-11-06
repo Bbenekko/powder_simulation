@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "conio.h": "c",
+        "stdio.h": "c",
+        "ctype.h": "c",
+        "ncurses.h": "c"
+    }
+}
