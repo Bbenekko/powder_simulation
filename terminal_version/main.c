@@ -1,7 +1,9 @@
-#include "simu_header.h"
+#include "main.h"
 
 int main(void)
 {
+    srand(time(NULL));
+
     initscr(); // Initialize ncurses
 
     

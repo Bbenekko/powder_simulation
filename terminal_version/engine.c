@@ -56,12 +56,20 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
 
                 break;
                 case typeSand:
-                if(display[i][j+1] != typeAir)
+                if(display[i][j+1] == typeAir)
                 {
                     display[i][j] = typeAir;
                     display[i][j+1] = typeSand;
                 } 
-                
+                else if (display[i][j+1] == typeSand || display[i][j+1] == typeWood)
+                {
+                    //if (rand() % 1) // esquerda direita
+                }
+                else if (display[i][j+1] == typeWater)
+                {
+                    display[i][j] = typeAir;
+                    display[i][j+1] = typeWater;
+                }                
                 break;
                 case typeWater:
                 if (j < sizeY - 1) // checa borda Y
