@@ -56,6 +56,8 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
 
                 break;
                 case typeSand:
+
+                // checa elemento abaixo
                 if(display[i][j+1] == typeAir)
                 {
                     display[i][j] = typeAir;
@@ -63,18 +65,139 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
                 } 
                 else if (display[i][j+1] == typeSand || display[i][j+1] == typeWood)
                 {
-                    //if (rand() % 1) // esquerda direita
+                    if (rand() % 2) // esquerda direita
+                    {
+                        // checa os casos de ar
+                        if (i > 0 && display[i-1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i-1][j+1] == typeSand;
+                        }
+                        else if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i+1][j+1] == typeSand;
+                        }
+                        // checa os casos de água
+                        else if (i > 0 && display[i-1][j+1] == typeWater)
+                        {
+                            display[i][j] = typeWater;
+                            display[i-1][j+1] == typeSand;
+                        }
+                        else if (i < (sizeX - 1) && display[i+1][j+1] == typeWater)
+                        {
+                            display[i][j] = typeWater;
+                            display[i+1][j+1] == typeSand;
+                        }
+                        else
+                        {
+                            // TODO erro colorido de vermelho
+                        }
+                    }
+                    else // direita esquerda
+                    {
+                        // caso ar
+                        if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i-1][j+1] == typeSand;
+                        }
+                        else if (i > 0 && display[i-1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i+1][j+1] == typeSand;
+                        }
+                        // caso água
+                        else if (i < (sizeX - 1) && display[i+1][j+1] == typeWater)
+                        {
+                            display[i][j] = typeWater;
+                            display[i-1][j+1] == typeSand;
+                        }
+                        else if (i > 0 && display[i-1][j+1] == typeWater)
+                        {
+                            display[i][j] = typeWater;
+                            display[i+1][j+1] == typeSand;
+                        }
+                        else
+                        {
+                            // TODO erro colorido de vermelho
+                        }
+                    }
                 }
                 else if (display[i][j+1] == typeWater)
                 {
                     display[i][j] = typeAir;
                     display[i][j+1] = typeWater;
-                }                
+                }        
+
                 break;
                 case typeWater:
-                if (j < sizeY - 1) // checa borda Y
-                {
 
+                //checa elemento abaixo
+                if(display[i][j+1] == typeAir)
+                {
+                    display[i][j] = typeAir;
+                    display[i][j+1] = typeWater;
+                } 
+                else // type = typeWater || typeWood || typeSand
+                {
+                    // checa as diaonais primeiro
+                    if (rand() % 2) // esquerda direita
+                    {
+                        // checa os casos de ar
+                        if (i > 0 && display[i-1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i-1][j+1] == typeWater;
+                        }
+                        else if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i+1][j+1] == typeWater;
+                        }
+                        else if (i > 0 && display[i-1][j] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i-1][j] = typeWater;
+                        }
+                        else if (i < (sizeX - 1) && display[i+1][j] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i+1][j] = typeWater;
+                        }
+                        else
+                        {
+                            // TODO erro colorido de vermelho
+                        }
+                    }
+                    else // direita esquerda
+                    {
+                        // caso ar
+                        if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i-1][j+1] == typeWater;
+                        }
+                        else if (i > 0 && display[i-1][j+1] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i+1][j+1] == typeWater;
+                        }
+                        else if (i < (sizeX - 1) && display[i+1][j] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i+1][j] = typeWater;
+                        }
+                        else if (i > 0 && display[i-1][j] == typeAir)
+                        {
+                            display[i][j] = typeAir;
+                            display[i-1][j] = typeWater;
+                        }
+                        else
+                        {
+                            // TODO erro colorido de vermelho
+                        }
+                    }
                 }
 
                 break;
