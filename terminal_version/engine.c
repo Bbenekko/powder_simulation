@@ -54,7 +54,8 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
                 case typeAir:
                 // ignora
 
-                break;
+                return SUCESS;
+
                 case typeSand:
 
                 // checa elemento abaixo
@@ -91,7 +92,8 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
                         }
                         else
                         {
-                            // TODO erro colorido de vermelho
+                            // TODO erro colorido de vermelho (erro na checagem de typeSand)
+                            return FAILURE;
                         }
                     }
                     else // direita esquerda
@@ -120,7 +122,8 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
                         }
                         else
                         {
-                            // TODO erro colorido de vermelho
+                            // TODO erro colorido de vermelho (erro na checagem de typeSand)
+                            return FAILURE;
                         }
                     }
                 }
@@ -128,9 +131,10 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
                 {
                     display[i][j] = typeAir;
                     display[i][j+1] = typeWater;
-                }        
+                }     
+                    
+                return SUCESS;
 
-                break;
                 case typeWater:
 
                 //checa elemento abaixo
@@ -167,7 +171,8 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
                         }
                         else
                         {
-                            // TODO erro colorido de vermelho
+                            // TODO erro colorido de vermelho (erro na checagem de typeWater)
+                            return FAILURE;
                         }
                     }
                     else // direita esquerda
@@ -195,16 +200,22 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
                         }
                         else
                         {
-                            // TODO erro colorido de vermelho
+                            // TODO erro colorido de vermelho (erro na checagem de typeWater)
+                            return FAILURE;
                         }
                     }
                 }
+                
+                return SUCESS;
 
-                break;
                 case typeWood:
                 // ignora
 
-                break;
+                return SUCESS;
+
+                default:
+                // TODO erro colorido de vermelho (element type inválido)
+                return FAILURE; 
             }
         }
     }
