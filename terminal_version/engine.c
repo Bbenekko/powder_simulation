@@ -17,13 +17,17 @@ int checkElement(enum elementType element)
 }
 
 /* ============================ ######## ==========================================*/
-int** generateInitialData(int sizeX, int sizeY)
+Display generateInitialData(int sizeX, int sizeY)
 {
-    int display[sizeX][sizeY];
+    Display display = (Display)malloc(sizeX * sizeof(int*));
+    if (display == NULL) return NULL; // TODO add error when return NULL
 
-    // preenche o display com ar
     for(int i = 0; i < sizeX; i++)
     {
+        display[i] = (int*)malloc(sizeY * sizeof(int));
+        if (display[i] == NULL) return NULL; // TODO same
+
+        // preenche o display com ar
         for(int j = 0; j < sizeY; j++)
         {
             display[i][j] = typeAir;
@@ -33,9 +37,9 @@ int** generateInitialData(int sizeX, int sizeY)
     return display;
 }
 
-int insertElement(int** display, int x, int y, enum elementType element)
+int insertElement(Display display, int x, int y, enum elementType element)
 {
-    if (checkElement)
+    if (checkElement(element))
     {
         display[x][y] = element;
         return SUCESS;
@@ -66,9 +70,9 @@ Cursor* generateCursor(int displayX, int displayY)
     return newCursor;
 }
 
-int insertElementInCursor(int** display, Cursor* cursor)
+int insertElementInCursor(Display display, Cursor* cursor)
 {
-    if (checkElement)
+    if (checkElement(cursor->typeSelected))
     {
         display[cursor->coord[0]][cursor->coord[1]] = cursor->typeSelected;
         return SUCESS;
@@ -81,7 +85,7 @@ int insertElementInCursor(int** display, Cursor* cursor)
 
 int updateCursorElement(Cursor* Cursor, enum elementType newElement)
 {
-    if (checkElement)
+    if (checkElement(newElement))
     {
         Cursor->typeSelected = newElement;
         return SUCESS;
@@ -143,7 +147,7 @@ int updateCursorMove(Cursor* Cursor, enum arrowDirection direction)
 }
 
 /* ============================ UPDATES ==========================================*/
-int updateDisplay(int** display, int sizeX, int sizeY)
+int updateDisplay(Display display, int sizeX, int sizeY)
 {
     for(int i = sizeX - 2; i > 0; i--)
     {
