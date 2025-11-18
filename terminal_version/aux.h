@@ -11,3 +11,11 @@ enum elementType
     typeWater,
     typeWood
 };
+
+enum arrowDirection
+{
+    arrowUp,
+    arrowRight,
+    arrowDown,
+    arrowLeft
+};

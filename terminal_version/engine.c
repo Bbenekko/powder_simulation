@@ -1,8 +1,9 @@
 #include "engine.h"
 
-int validaElemento(enum elementType elemento) 
+/* ============================ AUXILIARY ==========================================*/
+int checkElement(enum elementType element) 
 {
-    switch (elemento) 
+    switch (element) 
     {
         case typeAir:
         case typeSand:
@@ -10,10 +11,12 @@ int validaElemento(enum elementType elemento)
         case typeWood:
             return SUCESS; // Valid
         default:
+            //TODO error message in validating element
             return FAILURE; // Invalid
     }
 }
 
+/* ============================ ######## ==========================================*/
 int** generateInitialData(int sizeX, int sizeY)
 {
     int display[sizeX][sizeY];
@@ -30,11 +33,11 @@ int** generateInitialData(int sizeX, int sizeY)
     return display;
 }
 
-int insereElemento(int** display, int coluna, enum elementType elemento)
+int insertElement(int** display, int x, int y, enum elementType element)
 {
-    if (validaElemento)
+    if (checkElement)
     {
-        display[coluna][0] = elemento;
+        display[x][y] = element;
         return SUCESS;
     }
     else
@@ -43,7 +46,104 @@ int insereElemento(int** display, int coluna, enum elementType elemento)
     }
 }
 
-int atualizaDisplay(int** display, int sizeX, int sizeY)
+/* ============================ CURSOR ==========================================*/
+Cursor* generateCursor(int displayX, int displayY)
+{
+    Cursor* newCursor = (Cursor*)malloc(sizeof(Cursor));
+
+    if (newCursor == NULL)
+    {
+        // TODO print error
+        return NULL;
+    }
+
+    newCursor->coord[0] = 0;
+    newCursor->coord[1] = 0;
+    newCursor->maxSize[0] = displayX;
+    newCursor->maxSize[1] = displayY;
+    newCursor->typeSelected = typeAir;
+
+    return newCursor;
+}
+
+int insertElementInCursor(int** display, Cursor* cursor)
+{
+    if (checkElement)
+    {
+        display[cursor->coord[0]][cursor->coord[1]] = cursor->typeSelected;
+        return SUCESS;
+    }
+    else
+    {
+        return FAILURE;
+    }
+}
+
+int updateCursorElement(Cursor* Cursor, enum elementType newElement)
+{
+    if (checkElement)
+    {
+        Cursor->typeSelected = newElement;
+        return SUCESS;
+    }
+    else
+    {
+        return FAILURE;
+    }
+}
+
+int updateCursorCoords(Cursor* Cursor, int newCoordX, int newCoordY)
+{
+    if(newCoordX > Cursor->maxSize[0] || newCoordX < 0 || newCoordY > Cursor->maxSize[1] || newCoordY < 0)
+    {
+        // TODO print error message
+        return FAILURE;
+    }
+    else
+    {
+        Cursor->coord[0] = newCoordX;
+        Cursor->coord[1] = newCoordY;
+        return SUCESS;
+    }
+}
+
+int updateCursorMove(Cursor* Cursor, enum arrowDirection direction)
+{
+    switch (direction)
+    {
+    case arrowUp:
+        if(Cursor->coord[1] - 1 >= 0)
+        {
+            Cursor->coord[1] -= 1;
+            return SUCESS;
+        }
+    case arrowRight:
+        if(Cursor->coord[0] + 1 <= Cursor->maxSize[0])
+        {
+            Cursor->coord[0] += 1;
+            return SUCESS;
+        }
+    case arrowDown:
+        if(Cursor->coord[1] + 1 <= Cursor->maxSize[1])
+        {
+            Cursor->coord[1] += 1;
+            return SUCESS;
+        }
+    case arrowLeft:
+        if(Cursor->coord[0] - 1 >= 0)
+        {
+            Cursor->coord[0] -= 1;
+            return SUCESS;
+        }
+
+    default:
+        // TODO error code
+        return FAILURE;
+    }
+}
+
+/* ============================ UPDATES ==========================================*/
+int updateDisplay(int** display, int sizeX, int sizeY)
 {
     for(int i = sizeX - 2; i > 0; i--)
     {
@@ -58,7 +158,7 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
 
                 case typeSand:
 
-                // checa elemento abaixo
+                // checa element abaixo
                 if(display[i][j+1] == typeAir)
                 {
                     display[i][j] = typeAir;
@@ -137,7 +237,7 @@ int atualizaDisplay(int** display, int sizeX, int sizeY)
 
                 case typeWater:
 
-                //checa elemento abaixo
+                //checa element abaixo
                 if(display[i][j+1] == typeAir)
                 {
                     display[i][j] = typeAir;
