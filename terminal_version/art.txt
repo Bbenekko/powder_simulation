@@ -1,0 +1,20 @@
+                                        
+     ╓────────────────╖                 
+     ║OOOOOOOOOOOOOOOO║                 
+     ║OOOOOOOOOOOOOOOO║   ███           
+     ║OOOOOOOOOOOOOOOO║   ███ - sand    
+     ║OOOOOOOOOOOOOOOO║   ███           
+     ║OOOOOOOOOOOOOOOO║                 
+     ║OOOOOOOOOOOOOOOO║                 
+     ║OOOOOOOOOOOOOOOO║                 
+     ║OOOOOOOOOOOOOOOO║                 
+     ║OOOOOOOOOOOOOOOO║                 
+     ║OOOOOOOOOOOOOOOO║                 
+     ║████████████████║                 
+     ╙────────────────╜                 
+Commands:                               
+Arrows - Move Cursor                    
+Enter - Insert element in cursor        
+0 ~ 9 - Elements                        
+Elements Table:                         
+                                        
