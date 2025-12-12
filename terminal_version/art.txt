@@ -17,4 +17,9 @@ Arrows - Move Cursor
 Enter - Insert element in cursor        
 0 ~ 9 - Elements                        
 Elements Table:                         
-                                        
+                          
+1 - █ - sand
+2 - █ - Water
+3 - █ - Wood
+(...)
+0 - O - Air

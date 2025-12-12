@@ -17,9 +17,9 @@ int checkElement(enum elementType element)
 }
 
 /* ============================ ######## ==========================================*/
-Display generateInitialData(int sizeX, int sizeY)
+Display* generateInitialData(int sizeX, int sizeY)
 {
-    Display display = (Display)malloc(sizeX * sizeof(int*));
+    Display* display = (Display*)malloc(sizeX * sizeof(int*));
     if (display == NULL) return NULL; // TODO add error when return NULL
 
     for(int i = 0; i < sizeX; i++)
@@ -37,7 +37,7 @@ Display generateInitialData(int sizeX, int sizeY)
     return display;
 }
 
-int insertElement(Display display, int x, int y, enum elementType element)
+int insertElement(Display* display, int x, int y, enum elementType element)
 {
     if (checkElement(element))
     {
@@ -70,7 +70,7 @@ Cursor* generateCursor(int displayX, int displayY)
     return newCursor;
 }
 
-int insertElementInCursor(Display display, Cursor* cursor)
+int insertElementInCursor(Display* display, Cursor* cursor)
 {
     if (checkElement(cursor->typeSelected))
     {
@@ -98,7 +98,7 @@ int updateCursorElement(Cursor* Cursor, enum elementType newElement)
 
 int updateCursorCoords(Cursor* Cursor, int newCoordX, int newCoordY)
 {
-    if(newCoordX > Cursor->maxSize[0] || newCoordX < 0 || newCoordY > Cursor->maxSize[1] || newCoordY < 0)
+    if(newCoordX >= Cursor->maxSize[0] || newCoordX < 0 || newCoordY >= Cursor->maxSize[1] || newCoordY < 0)
     {
         // TODO print error message
         return FAILURE;
@@ -147,13 +147,14 @@ int updateCursorMove(Cursor* Cursor, enum arrowDirection direction)
 }
 
 /* ============================ UPDATES ==========================================*/
-int updateDisplay(Display display, int sizeX, int sizeY)
+int updateDisplay(Display* display, int sizeX, int sizeY)
 {
     for(int i = sizeX - 2; i > 0; i--)
     {
         for(int j = sizeY - 2; j > 0; j--)
         {
-            switch(display[i][j])
+            int displayCurrentTile = display[i][j];
+            switch(displayCurrentTile)
             {
                 case typeAir:
                 // ignora
@@ -176,23 +177,23 @@ int updateDisplay(Display display, int sizeX, int sizeY)
                         if (i > 0 && display[i-1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i-1][j+1] == typeSand;
+                            display[i-1][j+1] = typeSand;
                         }
                         else if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i+1][j+1] == typeSand;
+                            display[i+1][j+1] = typeSand;
                         }
                         // checa os casos de água
                         else if (i > 0 && display[i-1][j+1] == typeWater)
                         {
                             display[i][j] = typeWater;
-                            display[i-1][j+1] == typeSand;
+                            display[i-1][j+1] = typeSand;
                         }
                         else if (i < (sizeX - 1) && display[i+1][j+1] == typeWater)
                         {
                             display[i][j] = typeWater;
-                            display[i+1][j+1] == typeSand;
+                            display[i+1][j+1] = typeSand;
                         }
                         else
                         {
@@ -206,23 +207,23 @@ int updateDisplay(Display display, int sizeX, int sizeY)
                         if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i-1][j+1] == typeSand;
+                            display[i-1][j+1] = typeSand;
                         }
                         else if (i > 0 && display[i-1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i+1][j+1] == typeSand;
+                            display[i+1][j+1] = typeSand;
                         }
                         // caso água
                         else if (i < (sizeX - 1) && display[i+1][j+1] == typeWater)
                         {
                             display[i][j] = typeWater;
-                            display[i-1][j+1] == typeSand;
+                            display[i-1][j+1] = typeSand;
                         }
                         else if (i > 0 && display[i-1][j+1] == typeWater)
                         {
                             display[i][j] = typeWater;
-                            display[i+1][j+1] == typeSand;
+                            display[i+1][j+1] = typeSand;
                         }
                         else
                         {
@@ -256,12 +257,12 @@ int updateDisplay(Display display, int sizeX, int sizeY)
                         if (i > 0 && display[i-1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i-1][j+1] == typeWater;
+                            display[i-1][j+1] = typeWater;
                         }
                         else if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i+1][j+1] == typeWater;
+                            display[i+1][j+1] = typeWater;
                         }
                         else if (i > 0 && display[i-1][j] == typeAir)
                         {
@@ -285,12 +286,12 @@ int updateDisplay(Display display, int sizeX, int sizeY)
                         if (i < (sizeX - 1) && display[i+1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i-1][j+1] == typeWater;
+                            display[i-1][j+1] = typeWater;
                         }
                         else if (i > 0 && display[i-1][j+1] == typeAir)
                         {
                             display[i][j] = typeAir;
-                            display[i+1][j+1] == typeWater;
+                            display[i+1][j+1] = typeWater;
                         }
                         else if (i < (sizeX - 1) && display[i+1][j] == typeAir)
                         {
